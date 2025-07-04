@@ -1,0 +1,36 @@
+name: Kubernetes Deployment
+
+on:
+  workflow_run:
+    workflows: ["Multi-App Build, Scan, and Push"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'latest'
+
+    - name: Configure kubeconfig
+      run: |
+        aws eks update-kubeconfig --name myapp-cluster --region ap-south-1
+
+    - name: Deploy with Helm (Red App)
+      run: |
+        helm upgrade --install red ./myapp-chart -f myapp-chart/values-red.yaml
+
+    - name: Deploy with Helm (Blue App)
+      run: |
+        helm upgrade --install blue ./myapp-chart -f myapp-chart/values-blue.yaml
+
+    - name: Deploy with Helm (Green App)
+      run: |
+        helm upgrade --install green ./myapp-chart -f myapp-chart/values-green.yaml
