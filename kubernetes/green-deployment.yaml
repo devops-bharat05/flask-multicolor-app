@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: green-container
-        image: yourdockerhubusername/green-app:latest
+        image: bharatbhushan05/green-app:latest
         ports:
         - containerPort: 80
         env:
