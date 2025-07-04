@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: multi-color-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: www.myapp.com            #Make sure www.myapp.com points to your Ingress IP (edit /etc/hosts locally if testing)
+    http:
+      paths:
+      - path: /red
+        pathType: Prefix
+        backend:
+          service:
+            name: red-service
+            port:
+              number: 80
+      - path: /blue
+        pathType: Prefix
+        backend:
+          service:
+            name: blue-service
+            port:
+              number: 80
+      - path: /green
+        pathType: Prefix
+        backend:
+          service:
+            name: green-service
+            port:
+              number: 80
