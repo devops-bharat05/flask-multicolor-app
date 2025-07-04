@@ -43,3 +43,13 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/${{ matrix.app }}:latest
+
+  terraform-implementation:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [red-app, blue-app, green-app]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
