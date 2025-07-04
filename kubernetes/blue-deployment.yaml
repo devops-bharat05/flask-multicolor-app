@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: blue-container
-        image: yourdockerhubusername/blue-app:latest
+        image: bharatbhushan05/blue-app:latest
         ports:
         - containerPort: 80
         env:
